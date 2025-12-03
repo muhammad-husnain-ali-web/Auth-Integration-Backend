@@ -30,3 +30,17 @@ export const getProduct = async (req, res) => {
         res.status(400).json("Server error")
     }
 }
+
+export const getProductByCategory = async (req, res) => {
+    try {
+        const category = req.params.category
+        const cat = await Category.findOne({ name: category });
+        if (!cat) return res.status(404).json({success: false, message: "Category not found" });
+
+        const products = await Product.find({ category: cat._id }).populate("category");
+        res.json({success: true, products, category: cat});
+    } catch (error) {
+        console.error(error)
+        res.status(400).json("Server error")
+    }
+}

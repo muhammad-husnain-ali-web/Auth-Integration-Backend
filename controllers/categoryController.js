@@ -16,7 +16,7 @@ export const addCategory = async (req, res) => {
 export const getCategory = async (req, res) => {
     try {
         const categories = await Category.find();
-        res.json(categories);
+        res.json({success: true, categories});
     } catch (error) {
         console.error(error)
         res.status(400).json("Server error")
